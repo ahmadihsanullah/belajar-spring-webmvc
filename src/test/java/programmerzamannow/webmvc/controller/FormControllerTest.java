@@ -22,6 +22,21 @@ class FormControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    void createPerson() throws Exception {
+        mockMvc.perform(
+                post("/form/person")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name", "ahmad")
+                        .param("birthDate", "2004-02-14")
+                        .param("address", "Indonesia")
+        ).andExpectAll(
+                status().isOk(),
+                content().string(Matchers.containsString("Success create person with name : ahmad" +
+                        ", birthDate : 2004-02-14" +
+                        ", address : Indonesia")
+        ));
+    }
+    @Test
     void helloForm() throws Exception {
         mockMvc.perform(
                 post("/form/hello")
