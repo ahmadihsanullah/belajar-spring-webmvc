@@ -37,4 +37,25 @@ public class HelloControllerTest {
                 content().string(Matchers.containsString("Hello Ahmad"))
         );
     }
+
+    @Test
+    void helloName() throws Exception{
+        mockMvc.perform(
+                get("/hello").queryParam("name","Sholihaha")
+        ).andDo(print())
+        .andExpectAll(
+                status().isOk(),
+                content().string(Matchers.containsString("Hello Sholihah"))
+        );
+    }
+
+    @Test
+    void helloNotAllowed() throws Exception{
+        mockMvc.perform(
+                post("/hello").queryParam("name","Sholihaha")
+        ).andDo(print())
+        .andExpectAll(
+                status().isMethodNotAllowed()
+        );
+    }
 }

@@ -1,5 +1,10 @@
 package programmerzamannow.webmvc.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import jakarta.servlet.http.Cookie;
 
 
 @SpringBootTest
@@ -44,6 +45,17 @@ class AuthControllerTest {
         ).andExpectAll(
                 status().isUnauthorized(),
                 content().string(Matchers.containsString("KO"))
+        );
+    }
+
+    @Test
+    void loginCookie() throws Exception {
+        mockMvc.perform(
+                get("/auth/user")
+                                .cookie(new Cookie("username", "eko"))
+        ).andExpectAll(
+                status().isOk(),
+                content().string(Matchers.containsString("Hello eko"))
         );
     }
 }

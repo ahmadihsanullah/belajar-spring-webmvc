@@ -17,7 +17,7 @@ public class ResponseBodyController {
     private ObjectMapper objectMapper;
 
     @PostMapping(
-            path = "/body/hello",
+            path = "/body/hello2",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
